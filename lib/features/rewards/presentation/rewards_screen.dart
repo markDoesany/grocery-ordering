@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/cart/domain/cart_provider.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/utils/mock_actions.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
 import '../../../shared/widgets/section_header.dart';
@@ -17,7 +18,7 @@ class RewardsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     return MobileScaffold(
-      currentIndex: 3,
+      currentTab: AppTab.rewards,
       cartSummary: ref.watch(cartSummaryProvider),
       backgroundColor: cs.surfaceContainerLowest,
       appBar: _RewardsAppBar(),

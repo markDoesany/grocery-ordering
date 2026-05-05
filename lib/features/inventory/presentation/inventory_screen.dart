@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/cart/domain/cart_provider.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/utils/mock_actions.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
 import 'widgets/inventory_controls_header.dart';
@@ -28,7 +29,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return MobileScaffold(
-      currentIndex: 0,
+      currentTab: AppTab.restock,
       cartSummary: ref.watch(cartSummaryProvider),
       backgroundColor: cs.surface,
       appBar: _InventoryAppBar(),

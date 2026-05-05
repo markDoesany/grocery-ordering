@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/branding/domain/branding_provider.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/utils/mock_actions.dart';
+import '../../../shared/widgets/app_scroll_view.dart';
 import '../../../shared/widgets/loading_indicator.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
       loading: () => const Scaffold(body: LoadingIndicator()),
       error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
       data: (branding) => MobileScaffold(
-        currentIndex: 0,
+        currentTab: AppTab.restock,
         cartSummary: ref.watch(cartSummaryProvider),
         backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: HomeTopAppBar(
@@ -47,22 +49,17 @@ class _CatalogBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      padding: EdgeInsets.fromLTRB(16, 16, 16, 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PromotionsSection(),
-          SizedBox(height: 24),
-          HeroBannerSection(),
-          SizedBox(height: 24),
-          QuickReorderSection(),
-          SizedBox(height: 24),
-          ProductGridSection(),
-          SizedBox(height: 24),
-        ],
-      ),
+    return const AppScrollView(
+      children: [
+        PromotionsSection(),
+        SizedBox(height: 24),
+        HeroBannerSection(),
+        SizedBox(height: 24),
+        QuickReorderSection(),
+        SizedBox(height: 24),
+        ProductGridSection(),
+        SizedBox(height: 24),
+      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/cart/domain/cart_provider.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../features/home/presentation/widgets/home_top_app_bar.dart';
 import '../../../shared/data/mock_catalog.dart';
 import '../../../shared/utils/mock_actions.dart';
@@ -40,7 +41,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return MobileScaffold(
-      currentIndex: 1,
+      currentTab: AppTab.search,
       cartSummary: ref.watch(cartSummaryProvider),
       backgroundColor: cs.surface,
       appBar: HomeTopAppBar(

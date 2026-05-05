@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../shared/utils/mock_actions.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
@@ -21,7 +22,7 @@ class CartScreen extends ConsumerWidget {
     final cart = ref.read(cartProvider.notifier);
 
     return MobileScaffold(
-      currentIndex: 4,
+      currentTab: AppTab.cart,
       cartSummary: summary,
       backgroundColor: cs.surface,
       appBar: _CartAppBar(

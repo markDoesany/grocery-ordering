@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../shared/utils/mock_actions.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
@@ -19,7 +20,7 @@ class OrderDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     return MobileScaffold(
-      currentIndex: 2,
+      currentTab: AppTab.history,
       cartSummary: ref.watch(cartSummaryProvider),
       backgroundColor: cs.surface,
       appBar: _OrderDetailsAppBar(),
@@ -133,9 +134,7 @@ class _OrderDetailsAppBar extends StatelessWidget
               width: 44,
               height: 44,
               child: InkWell(
-                onTap: () => context.canPop()
-                    ? context.pop()
-                    : context.go(AppConstants.homeRoute),
+                onTap: () => popOrGo(context, AppConstants.homeRoute),
                 child: Icon(Icons.arrow_back, color: cs.primary),
               ),
             ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../../core/constants/app_constants.dart';
+import '../../core/navigation/app_navigation.dart';
 import '../../features/cart/domain/cart_provider.dart';
 import 'bottom_nav_bar.dart';
 
 class MobileScaffold extends StatelessWidget {
   const MobileScaffold({
     super.key,
-    required this.currentIndex,
+    required this.currentTab,
     required this.body,
     required this.cartSummary,
     this.appBar,
@@ -15,7 +14,7 @@ class MobileScaffold extends StatelessWidget {
     this.bottom,
   });
 
-  final int currentIndex;
+  final AppTab currentTab;
   final Widget body;
   final CartSummary cartSummary;
   final PreferredSizeWidget? appBar;
@@ -37,27 +36,10 @@ class MobileScaffold extends StatelessWidget {
               ],
             ),
       bottomNavigationBar: AppBottomNavBar(
-        currentIndex: currentIndex,
+        currentIndex: currentTab.index,
         cartBadge: cartSummary.itemCount > 0 ? cartSummary.badgeText : null,
-        onTap: (i) => _handleTap(context, i),
+        onTap: (i) => goToTab(context, currentTab, i),
       ),
     );
-  }
-
-  void _handleTap(BuildContext context, int index) {
-    if (index == currentIndex) return;
-
-    switch (index) {
-      case 0:
-        context.go(AppConstants.homeRoute);
-      case 1:
-        context.go(AppConstants.searchRoute);
-      case 2:
-        context.go(AppConstants.orderDetailsRoute);
-      case 3:
-        context.go(AppConstants.rewardsRoute);
-      case 4:
-        context.go(AppConstants.cartRoute);
-    }
   }
 }
