@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import '../../../../../shared/widgets/badge_label.dart';
+
+/// 2-column grid of order metadata (order #, date, status, items count).
+class ReceiptInfoSection extends StatelessWidget {
+  const ReceiptInfoSection({
+    super.key,
+    required this.orderNumber,
+    required this.orderDate,
+    required this.status,
+    required this.itemCount,
+  });
+
+  final String orderNumber;
+  final String orderDate;
+  final String status;
+  final String itemCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: cs.primary, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 2-column metadata grid
+          Row(
+            children: [
+              Expanded(
+                child: _InfoCell(label: 'ORDER NUMBER', value: orderNumber),
+              ),
+              Expanded(
+                child: _InfoCell(label: 'ORDER DATE', value: orderDate),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'STATUS',
+                      style: tt.labelSmall?.copyWith(
+                        color: cs.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    BadgeLabel(label: status),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: _InfoCell(label: 'ITEMS', value: itemCount),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoCell extends StatelessWidget {
+  const _InfoCell({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: tt.labelSmall?.copyWith(color: cs.onSurfaceVariant)),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: tt.bodyMedium?.copyWith(
+            color: cs.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+}
