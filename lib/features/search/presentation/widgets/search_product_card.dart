@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../cart/domain/cart_provider.dart';
+import '../../../../../shared/widgets/app_surface.dart';
 import '../../../../../shared/widgets/image_placeholder.dart';
 
 /// Horizontal product card with cart-backed quantity state.
@@ -33,23 +34,20 @@ class SearchProductCard extends ConsumerWidget {
       height: 128,
       child: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: cs.surfaceContainerLowest,
-              border: Border.all(color: cs.outlineVariant),
-            ),
+          AppSurface(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: 128,
-                  decoration: BoxDecoration(
-                    color: cs.surfaceContainerHighest,
-                    border: Border(right: BorderSide(color: cs.outlineVariant)),
+                const ClipRRect(
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(8),
                   ),
-                  child: const ImagePlaceholder(
-                    height: double.infinity,
-                    iconSize: 36,
+                  child: SizedBox(
+                    width: 128,
+                    child: ImagePlaceholder(
+                      height: double.infinity,
+                      iconSize: 36,
+                    ),
                   ),
                 ),
                 Expanded(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Underline-only search field — border-bottom-2 primary, search icon prefix.
+/// Compact search field with branded focus styling.
 class SearchBarInput extends StatelessWidget {
   const SearchBarInput({
     super.key,
@@ -19,12 +19,21 @@ class SearchBarInput extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: cs.primary, width: 2)),
+        color: cs.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: cs.outlineVariant),
+        boxShadow: [
+          BoxShadow(
+            color: cs.shadow.withValues(alpha: 0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: [
-          Icon(Icons.search, color: cs.outline, size: 22),
+          Icon(Icons.search, color: cs.primary, size: 22),
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
@@ -34,8 +43,11 @@ class SearchBarInput extends StatelessWidget {
               style: tt.bodyLarge?.copyWith(color: cs.onSurface),
               decoration: InputDecoration(
                 hintText: 'Search products...',
-                hintStyle: tt.bodyLarge?.copyWith(color: cs.outlineVariant),
+                hintStyle: tt.bodyLarge?.copyWith(color: cs.outline),
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                filled: false,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
               ),

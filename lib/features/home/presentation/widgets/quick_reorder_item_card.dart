@@ -32,11 +32,9 @@ class QuickReorderItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(8),
-                  ),
-                  child: const ImagePlaceholder(height: 96, iconSize: 32),
+                const ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+                  child: ImagePlaceholder(height: 96, iconSize: 32),
                 ),
                 // Info + button
                 Padding(

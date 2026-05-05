@@ -55,7 +55,9 @@ class ReceiptInfoSection extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(child: _InfoCell(label: 'ITEMS', value: itemCount)),
+              Expanded(
+                child: _InfoCell(label: 'ITEMS', value: itemCount),
+              ),
             ],
           ),
         ],

@@ -119,7 +119,9 @@ class _NavItem extends StatelessWidget {
                       style: tt.labelSmall?.copyWith(
                         color: fgColor,
                         fontSize: 10,
-                        fontWeight: isActive ? FontWeight.w800 : FontWeight.w600,
+                        fontWeight: isActive
+                            ? FontWeight.w800
+                            : FontWeight.w600,
                       ),
                     ),
                   ],

@@ -48,21 +48,26 @@ class _CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isActive ? cs.primary : cs.surface,
-          border: Border.all(
-            color: isActive ? cs.primary : cs.outline,
-            width: isActive ? 2 : 1,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(999),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: isActive ? cs.primary : cs.surfaceContainerLowest,
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(
+              color: isActive ? cs.primary : cs.outlineVariant,
+              width: isActive ? 2 : 1,
+            ),
           ),
-        ),
-        child: Text(
-          label,
-          style: tt.labelLarge?.copyWith(
-            color: isActive ? cs.onPrimary : cs.onSurface,
+          child: Text(
+            label,
+            style: tt.labelLarge?.copyWith(
+              color: isActive ? cs.onPrimary : cs.onSurface,
+            ),
           ),
         ),
       ),

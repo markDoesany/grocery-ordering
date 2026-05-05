@@ -25,11 +25,9 @@ class FrequentlyPurchasedCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(8),
-              ),
-              child: const ImagePlaceholder(height: 96, iconSize: 32),
+            const ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+              child: ImagePlaceholder(height: 96, iconSize: 32),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
@@ -69,9 +67,7 @@ class FrequentlyPurchasedCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               'ADD',
-                              style: tt.labelLarge?.copyWith(
-                                color: cs.primary,
-                              ),
+                              style: tt.labelLarge?.copyWith(color: cs.primary),
                             ),
                           ],
                         ),

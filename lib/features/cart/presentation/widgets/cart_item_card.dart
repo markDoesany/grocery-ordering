@@ -104,7 +104,11 @@ class CartItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(999),
                 child: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: Icon(Icons.close, size: 18, color: cs.onErrorContainer),
+                  child: Icon(
+                    Icons.close,
+                    size: 18,
+                    color: cs.onErrorContainer,
+                  ),
                 ),
               ),
             ),

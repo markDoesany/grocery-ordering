@@ -68,9 +68,7 @@ class InventoryCard extends StatelessWidget {
                   Positioned(
                     top: 10,
                     left: 10,
-                    child: BadgeLabel(
-                      label: badgeLabel,
-                    ),
+                    child: BadgeLabel(label: badgeLabel),
                   ),
                 ],
               ),

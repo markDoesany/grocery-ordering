@@ -40,11 +40,9 @@ class ProductCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Product image
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(8),
-                ),
-                child: const ImagePlaceholder(height: 128, iconSize: 40),
+              const ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+                child: ImagePlaceholder(height: 128, iconSize: 40),
               ),
               // Card body
               Padding(

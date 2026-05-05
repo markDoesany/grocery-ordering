@@ -23,7 +23,8 @@ class AppSurface extends StatelessWidget {
         color: cs.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: borderColor ??
+          color:
+              borderColor ??
               (highlight
                   ? cs.primary.withValues(alpha: 0.46)
                   : cs.outlineVariant.withValues(alpha: 0.72)),
