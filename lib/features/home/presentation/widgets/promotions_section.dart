@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../../../shared/data/mock_catalog.dart';
 import '../../../../shared/utils/mock_actions.dart';
@@ -14,6 +16,7 @@ class PromotionsSection extends StatefulWidget {
 
 class _PromotionsSectionState extends State<PromotionsSection> {
   late final PageController _pageController;
+  Timer? _autoSlideTimer;
   int _currentPage = 0;
 
   static const _promotions = MockCatalog.promotions;
@@ -22,12 +25,26 @@ class _PromotionsSectionState extends State<PromotionsSection> {
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 0.9);
+    _startAutoSlide();
   }
 
   @override
   void dispose() {
+    _autoSlideTimer?.cancel();
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _autoSlideTimer?.cancel();
+    _autoSlideTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!mounted || !_pageController.hasClients || _promotions.length < 2) {
+        return;
+      }
+
+      final nextPage = (_currentPage + 1) % _promotions.length;
+      _goToPage(nextPage);
+    });
   }
 
   void _goToPage(int page) {
