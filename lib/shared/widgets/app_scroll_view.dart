@@ -17,10 +17,7 @@ class AppScrollView extends StatelessWidget {
     return SingleChildScrollView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       padding: padding,
-      child: Column(
-        crossAxisAlignment: crossAxisAlignment,
-        children: children,
-      ),
+      child: Column(crossAxisAlignment: crossAxisAlignment, children: children),
     );
   }
 }

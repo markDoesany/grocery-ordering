@@ -5,12 +5,13 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/navigation/app_navigation.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../shared/utils/mock_actions.dart';
+import '../../../shared/widgets/app_scroll_view.dart';
 import '../../../shared/widgets/mobile_scaffold.dart';
 import '../../../shared/widgets/section_header.dart';
 import 'widgets/cart_item_card.dart';
 import 'widgets/ledger_total_section.dart';
 
-/// Active cart / ledger screen - bottom nav Cart tab (index 4) active.
+/// Active cart / ledger screen.
 class CartScreen extends ConsumerWidget {
   const CartScreen({super.key});
 
@@ -38,32 +39,27 @@ class CartScreen extends ConsumerWidget {
             ? () => context.go(AppConstants.checkoutRoute)
             : () => showMockSnack(context, 'Add items before checkout'),
       ),
-      body: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      body: AppScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SectionHeader(title: 'Active Ledger', usePrimaryBorder: true),
-            const SizedBox(height: 8),
-            if (cartItems.isEmpty)
-              const _EmptyCart()
-            else
-              for (final item in cartItems) ...[
-                CartItemCard(
-                  name: item.product.name,
-                  description:
-                      '${item.product.category}  •  ${item.product.sku}',
-                  price: item.product.formattedPrice,
-                  quantity: item.quantity,
-                  onDecrement: () => cart.decrement(item.product.id),
-                  onIncrement: () => cart.increment(item.product.id),
-                  onRemove: () => cart.remove(item.product.id),
-                ),
-                if (item != cartItems.last) const SizedBox(height: 12),
-              ],
-          ],
-        ),
+        children: [
+          const SectionHeader(title: 'Active Ledger', usePrimaryBorder: true),
+          const SizedBox(height: 8),
+          if (cartItems.isEmpty)
+            const _EmptyCart()
+          else
+            for (final item in cartItems) ...[
+              CartItemCard(
+                name: item.product.name,
+                description: '${item.product.category}  •  ${item.product.sku}',
+                price: item.product.formattedPrice,
+                quantity: item.quantity,
+                onDecrement: () => cart.decrement(item.product.id),
+                onIncrement: () => cart.increment(item.product.id),
+                onRemove: () => cart.remove(item.product.id),
+              ),
+              if (item != cartItems.last) const SizedBox(height: 12),
+            ],
+        ],
       ),
     );
   }

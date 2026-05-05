@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/widgets/app_action_button.dart';
 import '../../../shared/utils/mock_actions.dart';
 import 'widgets/delivery_details_section.dart';
@@ -75,9 +76,7 @@ class _CheckoutAppBar extends StatelessWidget implements PreferredSizeWidget {
               width: 44,
               height: 44,
               child: InkWell(
-                onTap: () => context.canPop()
-                    ? context.pop()
-                    : context.go(AppConstants.cartRoute),
+                onTap: () => popOrGo(context, AppConstants.cartRoute),
                 child: Icon(Icons.close, color: cs.primary),
               ),
             ),

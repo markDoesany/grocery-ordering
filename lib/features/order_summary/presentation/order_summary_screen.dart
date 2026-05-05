@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/navigation/app_navigation.dart';
 import '../../../features/checkout/presentation/widgets/price_row.dart';
 import '../../../shared/utils/mock_actions.dart';
 import '../../../shared/widgets/section_header.dart';
@@ -121,9 +122,7 @@ class _OrderSummaryAppBar extends StatelessWidget
               width: 44,
               height: 44,
               child: InkWell(
-                onTap: () => context.canPop()
-                    ? context.pop()
-                    : context.go(AppConstants.homeRoute),
+                onTap: () => popOrGo(context, AppConstants.homeRoute),
                 child: Icon(Icons.arrow_back, color: cs.primary),
               ),
             ),

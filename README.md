@@ -1,17 +1,22 @@
-# grocery
+# Grocery
 
-A new Flutter project.
+Multi-tenant B2B grocery ordering mockup built with Flutter.
 
-## Getting Started
+## Project Guide
 
-This project is a starting point for a Flutter application.
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) first. It explains the
+folder structure, state management, navigation, and where new code should go.
 
-A few resources to get you started if this is your first Flutter project:
+## Useful Commands
+
+```powershell
+flutter analyze
+flutter test
+flutter run
+```
+
+## Flutter References
 
 - [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
 - [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
