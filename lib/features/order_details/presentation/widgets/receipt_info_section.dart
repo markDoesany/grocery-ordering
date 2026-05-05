@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../../../shared/widgets/app_surface.dart';
 import '../../../../../shared/widgets/badge_label.dart';
 
-/// 2-column grid of order metadata (order #, date, status, items count).
+/// Two-column grid of order metadata.
 class ReceiptInfoSection extends StatelessWidget {
   const ReceiptInfoSection({
     super.key,
@@ -20,15 +21,12 @@ class ReceiptInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    return Container(
+    return AppSurface(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        border: Border.all(color: cs.primary, width: 2),
-      ),
+      highlight: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 2-column metadata grid
           Row(
             children: [
               Expanded(
@@ -57,9 +55,7 @@ class ReceiptInfoSection extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: _InfoCell(label: 'ITEMS', value: itemCount),
-              ),
+              Expanded(child: _InfoCell(label: 'ITEMS', value: itemCount)),
             ],
           ),
         ],
@@ -87,7 +83,7 @@ class _InfoCell extends StatelessWidget {
           value,
           style: tt.bodyMedium?.copyWith(
             color: cs.onSurface,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],

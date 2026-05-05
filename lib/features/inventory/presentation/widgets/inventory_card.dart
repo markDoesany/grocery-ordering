@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../../../shared/widgets/app_action_button.dart';
+import '../../../../../shared/widgets/app_surface.dart';
+import '../../../../../shared/widgets/badge_label.dart';
 import '../../../../../shared/widgets/image_placeholder.dart';
 
 /// Stock level variant for an inventory card.
@@ -41,46 +44,36 @@ class InventoryCard extends StatelessWidget {
       StockStatus.normal => 'IN STOCK',
     };
 
-    final badgeBg = switch (stockStatus) {
-      StockStatus.critical => cs.secondary,
-      StockStatus.low => cs.primary,
-      StockStatus.normal => cs.surfaceTint,
-    };
-
     final isUrgent = stockStatus == StockStatus.critical;
 
-    return Container(
-      decoration: BoxDecoration(border: Border.all(color: cs.outlineVariant)),
+    return AppSurface(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Aspect-video image with stock badge overlay
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: Stack(
-              children: [
-                const Positioned.fill(
-                  child: ImagePlaceholder(
-                    height: double.infinity,
-                    iconSize: 40,
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 3,
-                    ),
-                    color: badgeBg,
-                    child: Text(
-                      badgeLabel,
-                      style: tt.labelSmall?.copyWith(color: cs.onPrimary),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(8),
+              ),
+              child: Stack(
+                children: [
+                  const Positioned.fill(
+                    child: ImagePlaceholder(
+                      height: double.infinity,
+                      iconSize: 40,
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: BadgeLabel(
+                      label: badgeLabel,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -129,23 +122,11 @@ class InventoryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 // Action button
-                GestureDetector(
+                AppActionButton(
+                  label: isUrgent ? 'Urgent Restock' : 'Add to Restock List',
+                  filled: isUrgent,
+                  height: 44,
                   onTap: onAction,
-                  child: Container(
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: isUrgent ? cs.primary : null,
-                      border: Border.all(color: cs.primary, width: 2),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      isUrgent ? 'URGENT RESTOCK' : 'ADD TO RESTOCK LIST',
-                      style: tt.labelLarge?.copyWith(
-                        color: isUrgent ? cs.onPrimary : cs.primary,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -174,7 +155,11 @@ class _InventoryStepper extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     return Container(
       height: 36,
-      decoration: BoxDecoration(border: Border.all(color: cs.primary)),
+      decoration: BoxDecoration(
+        color: cs.primaryContainer.withValues(alpha: 0.34),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: cs.primary.withValues(alpha: 0.38)),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -210,27 +195,32 @@ class _StepBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: cs.surfaceContainerLowest,
-          border: Border(
-            right: borderRight
-                ? BorderSide(color: cs.primary)
-                : BorderSide.none,
-            left: borderLeft ? BorderSide(color: cs.primary) : BorderSide.none,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            border: Border(
+              right: borderRight
+                  ? BorderSide(color: cs.primary.withValues(alpha: 0.38))
+                  : BorderSide.none,
+              left: borderLeft
+                  ? BorderSide(color: cs.primary.withValues(alpha: 0.38))
+                  : BorderSide.none,
+            ),
           ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: cs.onSurface,
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: cs.onSurface,
+            ),
           ),
         ),
       ),

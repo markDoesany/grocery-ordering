@@ -18,20 +18,21 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# VS Code (uncomment if you want to ignore)
 #.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
 /build/
 /coverage/
+.packages
+pubspec.lock
 
 # Symbolication related
 app.*.symbols
@@ -39,7 +40,63 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
+# Android related
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/key.properties
+/android/local.properties
+/android/.gradle/
+*.jks
+*.keystore
+
+# iOS/XCode related
+/ios/*.mode1v3
+/ios/*.mode2v3
+/ios/*.moved-aside
+/ios/*.pbxuser
+/ios/*.perspectivev3
+/ios/*sync/
+/ios/.sconsign.dblite
+/ios/.tags*
+/ios/**/.vagrant/
+/ios/**/DerivedData/
+/ios/**/Icon?
+/ios/**/Pods/
+/ios/**/.symlinks/
+/ios/**/profile
+/ios/**/xcuserdata
+/ios/.generated/
+/ios/Flutter/App.framework
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/ephemeral/
+/ios/Flutter/flutter_export_environment.sh
+
+# macOS
+/macos/Flutter/ephemeral/
+/macos/Pods/
+/macos/**/xcuserdata/
+
+# Windows
+/windows/flutter/ephemeral/
+/windows/*.sln
+/windows/*.suo
+/windows/*.user
+/windows/*.userosscache
+/windows/*.sln.docstates
+/windows/.vs/
+
+# Linux
+/linux/flutter/ephemeral/
+
+# Web
+/web/flutter/ephemeral/
+
+# Test related
+/test/coverage/
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart

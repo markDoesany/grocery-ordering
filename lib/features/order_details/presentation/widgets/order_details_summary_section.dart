@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../../shared/widgets/app_action_button.dart';
+import '../../../../../shared/widgets/app_surface.dart';
 
 /// Price breakdown + Reorder button at the bottom of Order Details.
 class OrderDetailsSummarySection extends StatelessWidget {
@@ -23,9 +25,8 @@ class OrderDetailsSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    return Container(
+    return AppSurface(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(border: Border.all(color: cs.outlineVariant)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,14 +44,14 @@ class OrderDetailsSummarySection extends StatelessWidget {
           const SizedBox(height: 4),
           _SummaryLine(
             label: 'Discount',
-            value: '−$discount',
+            value: '-$discount',
             valueColor: cs.secondary,
           ),
           const SizedBox(height: 4),
           _SummaryLine(label: 'Tax', value: tax, valueColor: cs.onSurface),
           const SizedBox(height: 8),
-          Divider(thickness: 2, color: cs.primary),
-          const SizedBox(height: 4),
+          Divider(thickness: 1, color: cs.outlineVariant),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -63,28 +64,17 @@ class OrderDetailsSummarySection extends StatelessWidget {
                 totalPaid,
                 style: tt.headlineSmall?.copyWith(
                   color: cs.primary,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          GestureDetector(
+          AppActionButton(
+            label: 'Reorder',
+            filled: false,
+            height: 48,
             onTap: onReorder,
-            child: Container(
-              height: 48,
-              decoration: BoxDecoration(
-                border: Border.all(color: cs.primary, width: 2),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'REORDER',
-                style: tt.labelLarge?.copyWith(
-                  color: cs.primary,
-                  letterSpacing: 2,
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -119,7 +109,7 @@ class _SummaryLine extends StatelessWidget {
           value,
           style: tt.bodyMedium?.copyWith(
             color: valueColor,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],

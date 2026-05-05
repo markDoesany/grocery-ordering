@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../../../shared/widgets/app_surface.dart';
 import '../../../../../shared/widgets/image_placeholder.dart';
 
-/// 160px-wide card for the "Frequently Purchased" horizontal carousel.
+/// 160px-wide card for the Frequently Purchased horizontal carousel.
 class FrequentlyPurchasedCard extends StatelessWidget {
   const FrequentlyPurchasedCard({
     super.key,
@@ -20,13 +21,16 @@ class FrequentlyPurchasedCard extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     return SizedBox(
       width: 160,
-      child: Container(
-        decoration: BoxDecoration(border: Border.all(color: cs.outlineVariant)),
+      child: AppSurface(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 160×96 image area (aspect ~5:3)
-            const ImagePlaceholder(height: 96, iconSize: 32),
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(8),
+              ),
+              child: const ImagePlaceholder(height: 96, iconSize: 32),
+            ),
             Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
@@ -36,7 +40,7 @@ class FrequentlyPurchasedCard extends StatelessWidget {
                     name,
                     style: tt.bodySmall?.copyWith(
                       color: cs.onSurface,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -50,23 +54,27 @@ class FrequentlyPurchasedCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: onAdd,
-                    child: Container(
-                      height: 32,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: cs.primary),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add, size: 14, color: cs.primary),
-                          const SizedBox(width: 4),
-                          Text(
-                            'ADD',
-                            style: tt.labelLarge?.copyWith(color: cs.primary),
-                          ),
-                        ],
+                  Material(
+                    color: cs.primaryContainer.withValues(alpha: 0.34),
+                    borderRadius: BorderRadius.circular(8),
+                    child: InkWell(
+                      onTap: onAdd,
+                      borderRadius: BorderRadius.circular(8),
+                      child: SizedBox(
+                        height: 36,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add, size: 14, color: cs.primary),
+                            const SizedBox(width: 4),
+                            Text(
+                              'ADD',
+                              style: tt.labelLarge?.copyWith(
+                                color: cs.primary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
