@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../features/cart/domain/cart_provider.dart';
+import '../../../features/checkout/domain/fulfillment_provider.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/widgets/app_action_button.dart';
 import '../../../shared/utils/mock_actions.dart';
-import 'widgets/delivery_details_section.dart';
+import 'widgets/fulfillment_section.dart';
 import 'widgets/order_summary_section.dart';
 import 'widgets/payment_method_section.dart';
 
-/// Transactional checkout flow - no bottom nav, close button returns to catalog.
+/// Transactional checkout flow - no bottom nav, close button returns to cart.
 class CheckoutScreen extends ConsumerWidget {
   const CheckoutScreen({super.key});
 
@@ -18,6 +19,10 @@ class CheckoutScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     final summary = ref.watch(cartSummaryProvider);
+    final fulfillment = ref.watch(fulfillmentProvider);
+
+    final canPlace = summary.itemCount > 0 &&
+        (fulfillment.type == FulfillmentType.pickup || fulfillment.hasLocation);
 
     return Scaffold(
       backgroundColor: cs.surface,
@@ -30,21 +35,23 @@ class CheckoutScreen extends ConsumerWidget {
           children: [
             const OrderSummarySection(),
             const SizedBox(height: 16),
-            const DeliveryDetailsSection(),
+            const FulfillmentSection(),
             const SizedBox(height: 16),
             const PaymentMethodSection(),
             const SizedBox(height: 24),
             AppActionButton(
-              label: 'Place Order  •  ${summary.formattedTotal}',
-              onTap: summary.itemCount > 0
+              label: 'I-place ang order  •  ${summary.formattedTotal}',
+              onTap: canPlace
                   ? () {
                       ref.read(cartProvider.notifier).clear();
                       context.go(AppConstants.orderSummaryRoute);
                     }
                   : () => showMockSnack(
-                      context,
-                      'Add items before placing order',
-                    ),
+                        context,
+                        fulfillment.isDelivery && !fulfillment.hasLocation
+                            ? 'I-pin muna ang iyong lokasyon para sa delivery.'
+                            : 'Magdagdag ng items bago mag-order.',
+                      ),
             ),
             const SizedBox(height: 24),
           ],
@@ -82,7 +89,7 @@ class _CheckoutAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'CHECKOUT',
+              'Checkout',
               style: tt.headlineMedium?.copyWith(color: cs.primary),
             ),
           ],
