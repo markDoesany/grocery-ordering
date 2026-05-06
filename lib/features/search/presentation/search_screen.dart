@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../core/navigation/app_navigation.dart';
+import '../../../features/home/presentation/widgets/catalog_cart_strip.dart';
 import '../../../features/home/presentation/widgets/home_top_app_bar.dart';
 import '../../../shared/data/mock_catalog.dart';
 import '../../../shared/utils/mock_actions.dart';
@@ -24,10 +25,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   final _searchFocusNode = FocusNode();
 
   static const _categories = [
-    'Category 1',
-    'Category 2',
-    'Category 3',
-    'Category 4',
+    'Lahat',
+    'Beverages',
+    'Canned Goods',
+    'Bigas at Pampalasa',
+    'Meryenda',
+    'Panlinis',
   ];
 
   @override
@@ -40,17 +43,23 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final cartSummary = ref.watch(cartSummaryProvider);
+
     return MobileScaffold(
       currentTab: AppTab.search,
-      cartSummary: ref.watch(cartSummaryProvider),
+      cartSummary: cartSummary,
       backgroundColor: cs.surface,
       appBar: HomeTopAppBar(
-        title: 'GROCERY LEDGER',
+        title: 'Hanapin ang produkto',
         onSearchTap: () => _searchFocusNode.requestFocus(),
         onFilterTap: () => showMockActionSheet(
           context,
-          title: 'Search filters',
-          options: const ['Category', 'Low stock', 'Price low to high'],
+          title: 'I-filter ang resulta',
+          options: const [
+            'Kategorya',
+            'Mababa ang stock',
+            'Presyo: mababa patungo taas',
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -81,13 +90,16 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     badge: product.badge,
                   ),
                   if (product != MockCatalog.products.last)
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                 ],
               ],
             ),
           ],
         ),
       ),
+      bottom: cartSummary.itemCount > 0
+          ? CatalogCartStrip(summary: cartSummary)
+          : null,
     );
   }
 }

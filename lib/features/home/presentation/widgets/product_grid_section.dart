@@ -16,7 +16,7 @@ class ProductGridSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(
-          title: 'All Products',
+          title: 'Lahat ng produkto',
           large: true,
           usePrimaryBorder: true,
           trailing: Material(
@@ -24,23 +24,29 @@ class ProductGridSection extends StatelessWidget {
             child: InkWell(
               onTap: () => showMockActionSheet(
                 context,
-                title: 'Product filters',
-                options: const ['Sort by demand', 'Sale items', 'Low stock'],
+                title: 'I-filter ang produkto',
+                options: const [
+                  'Pinaka-mabenta',
+                  'Mababa ang stock',
+                  'Sale items',
+                  'Ayon sa kategorya',
+                ],
               ),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
                   border: Border.all(color: cs.outline),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'FILTER',
-                      style: tt.labelLarge?.copyWith(color: cs.onSurface),
-                    ),
+                    Icon(Icons.tune, size: 16, color: cs.onSurface),
                     const SizedBox(width: 4),
-                    Icon(Icons.filter_list, size: 18, color: cs.onSurface),
+                    Text(
+                      'I-filter',
+                      style: tt.labelMedium?.copyWith(color: cs.onSurface),
+                    ),
                   ],
                 ),
               ),
@@ -51,9 +57,9 @@ class ProductGridSection extends StatelessWidget {
           builder: (context, constraints) {
             final columns = constraints.maxWidth >= 560 ? 3 : 2;
             final aspectRatio = switch (constraints.maxWidth) {
-              < 340 => 0.52,
-              < 560 => 0.62,
-              _ => 0.68,
+              < 340 => 0.50,
+              < 560 => 0.58,
+              _ => 0.64,
             };
             return GridView.count(
               crossAxisCount: columns,
@@ -70,6 +76,8 @@ class ProductGridSection extends StatelessWidget {
                     name: product.name,
                     price: product.formattedPrice,
                     badge: product.badge,
+                    packSize: product.packSize,
+                    isLowStock: product.isLowStock,
                   ),
               ],
             );

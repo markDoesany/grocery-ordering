@@ -61,9 +61,10 @@ class SearchProductCard extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              category.toUpperCase(),
+                              category,
                               style: tt.labelSmall?.copyWith(
                                 color: cs.onSurfaceVariant,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             const SizedBox(height: 4),

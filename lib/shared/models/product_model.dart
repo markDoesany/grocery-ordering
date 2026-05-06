@@ -6,6 +6,8 @@ class ProductModel {
     required this.sku,
     required this.price,
     this.badge,
+    this.stockStatus = 'ok',
+    this.packSize,
   });
 
   final String id;
@@ -14,6 +16,15 @@ class ProductModel {
   final String sku;
   final double price;
   final String? badge;
+
+  /// 'ok' | 'low' | 'out'
+  final String stockStatus;
+
+  /// Supplier pack size label, e.g. 'Dose ng 12', 'Pack of 6'
+  final String? packSize;
+
+  bool get isLowStock => stockStatus == 'low';
+  bool get isOutOfStock => stockStatus == 'out';
 
   String get formattedPrice => '₱${price.toStringAsFixed(2)}';
 }

@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// [-] [count] [+] quantity stepper with 32x32 tap targets.
+/// [-] [count] [+] quantity stepper.
+///
+/// [compact] — 32px buttons, used inside tight cards (Quick Reorder).
+/// Default — 40px buttons, used in the main product grid.
 class QuantityStepper extends StatelessWidget {
   const QuantityStepper({
     super.key,
     required this.quantity,
     required this.onDecrement,
     required this.onIncrement,
+    this.compact = false,
   });
 
   final int quantity;
   final VoidCallback onDecrement;
   final VoidCallback onIncrement;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
+    final size = compact ? 32.0 : 40.0;
+    final countWidth = compact ? 30.0 : 36.0;
     return Container(
       decoration: BoxDecoration(
         color: cs.primaryContainer.withValues(alpha: 0.34),
@@ -28,20 +35,25 @@ class QuantityStepper extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _StepButton(
-            label: '-',
+            label: '−',
+            size: size,
             borderSide: BorderSide(color: cs.primary),
             onTap: onDecrement,
           ),
           SizedBox(
-            width: 32,
+            width: countWidth,
             child: Text(
               '$quantity',
               textAlign: TextAlign.center,
-              style: tt.labelLarge?.copyWith(color: cs.onSurface),
+              style: tt.labelLarge?.copyWith(
+                color: cs.onSurface,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           _StepButton(
             label: '+',
+            size: size,
             borderSide: BorderSide(color: cs.primary),
             onTap: onIncrement,
             leadingBorder: true,
@@ -55,12 +67,14 @@ class QuantityStepper extends StatelessWidget {
 class _StepButton extends StatelessWidget {
   const _StepButton({
     required this.label,
+    required this.size,
     required this.borderSide,
     required this.onTap,
     this.leadingBorder = false,
   });
 
   final String label;
+  final double size;
   final BorderSide borderSide;
   final VoidCallback onTap;
   final bool leadingBorder;
@@ -77,8 +91,8 @@ class _StepButton extends StatelessWidget {
           onTap();
         },
         child: Container(
-          width: 32,
-          height: 32,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(999),
@@ -91,7 +105,7 @@ class _StepButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: size * 0.45,
               fontWeight: FontWeight.bold,
               color: cs.onSurface,
             ),

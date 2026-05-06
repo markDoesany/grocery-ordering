@@ -33,11 +33,11 @@ class SectionHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                title.toUpperCase(),
+                title,
                 style: (large ? tt.headlineMedium : tt.headlineSmall)?.copyWith(
                   color: cs.onSurface,
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 0.2,
+                  letterSpacing: 0.1,
                 ),
               ),
             ),

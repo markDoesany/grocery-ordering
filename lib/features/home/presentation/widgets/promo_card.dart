@@ -3,9 +3,7 @@ import '../../../../shared/widgets/badge_label.dart';
 import '../../../../shared/widgets/app_action_button.dart';
 import '../../../../shared/widgets/app_surface.dart';
 
-/// Promotional card — border-2 primary, badge + headline + subtext + action button.
-///
-/// [filled] — true: button is bg=primary (filled); false: button is outlined.
+/// Compact promotional card — badge, headline, brief subtext, and action button.
 class PromoCard extends StatelessWidget {
   const PromoCard({
     super.key,
@@ -30,35 +28,44 @@ class PromoCard extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     return AppSurface(
       highlight: true,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BadgeLabel(label: badge),
-          const SizedBox(height: 8),
+          Row(
+            children: [
+              BadgeLabel(label: badge),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 6),
           Text(
             headline,
-            style: tt.headlineSmall?.copyWith(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: tt.titleMedium?.copyWith(
               color: cs.onSurface,
               fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             subtext,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: tt.bodySmall?.copyWith(
               color: cs.onSurfaceVariant,
-              height: 1.35,
+              height: 1.3,
             ),
           ),
-          const SizedBox(height: 16),
+          const Spacer(),
           SizedBox(
             width: double.infinity,
             child: AppActionButton(
               label: actionLabel,
               filled: filled,
               onTap: onActionTap,
-              height: 44,
+              height: 36,
             ),
           ),
         ],

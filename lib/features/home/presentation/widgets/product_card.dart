@@ -16,6 +16,8 @@ class ProductCard extends ConsumerWidget {
     required this.name,
     required this.price,
     this.badge,
+    this.packSize,
+    this.isLowStock = false,
   });
 
   final String productId;
@@ -23,6 +25,8 @@ class ProductCard extends ConsumerWidget {
   final String name;
   final String price;
   final String? badge;
+  final String? packSize;
+  final bool isLowStock;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,6 +37,8 @@ class ProductCard extends ConsumerWidget {
     );
     final cart = ref.read(cartProvider.notifier);
 
+    final badgeColor = isLowStock ? cs.error : null;
+
     return AppSurface(
       child: Stack(
         children: [
@@ -42,23 +48,24 @@ class ProductCard extends ConsumerWidget {
               // Product image
               const ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-                child: ImagePlaceholder(height: 128, iconSize: 40),
+                child: ImagePlaceholder(height: 112, iconSize: 36),
               ),
               // Card body
               Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      category.toUpperCase(),
-                      style: tt.labelLarge?.copyWith(
+                      category,
+                      style: tt.labelSmall?.copyWith(
                         color: cs.onSurfaceVariant,
-                        letterSpacing: 1.5,
-                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 3),
                     Text(
                       name,
                       maxLines: 2,
@@ -66,8 +73,18 @@ class ProductCard extends ConsumerWidget {
                       style: tt.bodyMedium?.copyWith(
                         color: cs.onSurface,
                         fontWeight: FontWeight.w700,
+                        height: 1.25,
                       ),
                     ),
+                    if (packSize != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        packSize!,
+                        style: tt.labelSmall?.copyWith(
+                          color: cs.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 8),
                     Divider(
                       height: 1,
@@ -75,37 +92,20 @@ class ProductCard extends ConsumerWidget {
                       color: cs.outlineVariant.withValues(alpha: 0.68),
                     ),
                     const SizedBox(height: 8),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final stepper = QuantityStepper(
-                          quantity: quantity,
-                          onDecrement: () => cart.decrement(productId),
-                          onIncrement: () => cart.increment(productId),
-                        );
-                        final price = Text(
-                          this.price,
-                          style: tt.bodyLarge?.copyWith(
-                            color: cs.onSurface,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-
-                        if (constraints.maxWidth < 140) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              price,
-                              const SizedBox(height: 8),
-                              stepper,
-                            ],
-                          );
-                        }
-
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [price, stepper],
-                        );
-                      },
+                    // Price — prominent
+                    Text(
+                      price,
+                      style: tt.titleMedium?.copyWith(
+                        color: cs.onSurface,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // Stepper — full width
+                    QuantityStepper(
+                      quantity: quantity,
+                      onDecrement: () => cart.decrement(productId),
+                      onIncrement: () => cart.increment(productId),
                     ),
                   ],
                 ),
@@ -114,7 +114,11 @@ class ProductCard extends ConsumerWidget {
           ),
           // Corner badge
           if (badge != null)
-            Positioned(top: 0, right: 0, child: BadgeLabel(label: badge!)),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: BadgeLabel(label: badge!, color: badgeColor),
+            ),
         ],
       ),
     );

@@ -44,13 +44,12 @@ class HomeTopAppBar extends StatelessWidget implements PreferredSizeWidget {
             _IconButton(icon: Icons.search, onTap: onSearchTap),
             Expanded(
               child: Text(
-                title.toUpperCase(),
+                title,
                 textAlign: TextAlign.center,
-                style: tt.labelLarge?.copyWith(
+                style: tt.titleSmall?.copyWith(
                   color: cs.onSurface,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.2,
-                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.1,
                 ),
               ),
             ),

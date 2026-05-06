@@ -53,11 +53,11 @@ class AppActionButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            label.toUpperCase(),
+            label,
             textAlign: TextAlign.center,
             style: tt.labelLarge?.copyWith(
               color: foreground,
-              letterSpacing: 1.2,
+              letterSpacing: 0.2,
             ),
           ),
         ),
