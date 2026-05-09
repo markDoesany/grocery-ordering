@@ -7,8 +7,8 @@ import 'package:latlong2/latlong.dart';
 
 import '../domain/fulfillment_provider.dart';
 
-const _kToken =
-    'REMOVED';
+// Set your Mapbox public token here or via --dart-define=MAPBOX_TOKEN=...
+const _kToken = String.fromEnvironment('MAPBOX_TOKEN', defaultValue: '');
 
 const _kDefaultCenter = LatLng(14.5995, 120.9842); // Metro Manila
 
