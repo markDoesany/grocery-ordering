@@ -75,7 +75,7 @@ class ProfileScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 32),
               // Info rows
-              _InfoTile(
+              const _InfoTile(
                 icon: Icons.person_outline,
                 label: 'Name',
                 value: 'Store Manager',
@@ -85,7 +85,7 @@ class ProfileScreen extends ConsumerWidget {
                 label: 'Store',
                 value: storeName,
               ),
-              _InfoTile(
+              const _InfoTile(
                 icon: Icons.badge_outlined,
                 label: 'Role',
                 value: 'Manager',
