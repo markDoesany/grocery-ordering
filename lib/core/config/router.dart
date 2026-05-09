@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../constants/app_constants.dart';
 import '../../features/auth/presentation/login_screen.dart';
+import '../../features/auth/presentation/profile_screen.dart';
 import '../../features/cart/presentation/cart_screen.dart';
 import '../../features/checkout/presentation/checkout_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
@@ -66,6 +67,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppConstants.rewardsRoute,
         pageBuilder: (context, state) =>
             _mobilePage(state, const RewardsScreen()),
+      ),
+      GoRoute(
+        path: AppConstants.profileRoute,
+        pageBuilder: (context, state) =>
+            _mobilePage(state, const ProfileScreen()),
       ),
     ],
   );

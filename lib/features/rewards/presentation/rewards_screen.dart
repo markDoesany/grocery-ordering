@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../features/cart/domain/cart_provider.dart';
 import '../../../core/navigation/app_navigation.dart';
 import '../../../shared/utils/mock_actions.dart';
@@ -146,12 +148,8 @@ class _RewardsAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: 44,
                 height: 44,
                 child: InkWell(
-                  onTap: () => showMockActionSheet(
-                    context,
-                    title: 'Reward filters',
-                    options: const ['Redeemable', 'Lowest points', 'Newest'],
-                  ),
-                  child: Icon(Icons.filter_list, color: cs.onSurface),
+                  onTap: () => context.push(AppConstants.profileRoute),
+                  child: Icon(Icons.person_outline, color: cs.onSurface),
                 ),
               ),
             ],

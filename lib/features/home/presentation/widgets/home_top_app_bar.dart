@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../shared/utils/mock_actions.dart';
 
-/// Sticky top app bar: search icon | centered title | tune icon.
+/// Sticky top app bar: search icon | centered title | profile icon.
 /// Matches HTML header: bg=surfaceContainerLowest, border-b-2 primary.
 class HomeTopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeTopAppBar({
@@ -53,7 +55,10 @@ class HomeTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
-            _IconButton(icon: Icons.tune, onTap: onFilterTap),
+            _IconButton(
+              icon: Icons.person_outline,
+              onTap: () => context.push(AppConstants.profileRoute),
+            ),
           ],
         ),
       ),

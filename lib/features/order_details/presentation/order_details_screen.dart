@@ -143,6 +143,15 @@ class _OrderDetailsAppBar extends StatelessWidget
               'ORDER DETAILS',
               style: tt.headlineMedium?.copyWith(color: cs.primary),
             ),
+            const Spacer(),
+            SizedBox(
+              width: 44,
+              height: 44,
+              child: InkWell(
+                onTap: () => context.push(AppConstants.profileRoute),
+                child: Icon(Icons.person_outline, color: cs.primary),
+              ),
+            ),
           ],
         ),
       ),

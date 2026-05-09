@@ -11,6 +11,7 @@ class AppConstants {
   static const String inventoryRoute = '/inventory';
   static const String searchRoute = '/search';
   static const String rewardsRoute = '/rewards';
+  static const String profileRoute = '/profile';
 
   static const Duration splashMinDuration = Duration(milliseconds: 1500);
   static const Duration networkTimeout = Duration(seconds: 10);
