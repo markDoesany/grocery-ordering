@@ -37,4 +37,9 @@ class AppConfig {
     'DEFAULT_PASSWORD',
     defaultValue: 'password',
   );
+
+  static const bool apiLoggingEnabled = bool.fromEnvironment(
+    'API_LOGGING_ENABLED',
+    defaultValue: true,
+  );
 }
