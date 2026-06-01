@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../shared/data/mock_catalog.dart';
 import '../../../shared/models/product_model.dart';
+import '../../../shared/providers/catalog_provider.dart';
 
 final cartProvider = StateNotifierProvider<CartController, Map<String, int>>((
   ref,
@@ -10,15 +11,23 @@ final cartProvider = StateNotifierProvider<CartController, Map<String, int>>((
 
 final cartItemsProvider = Provider<List<CartItem>>((ref) {
   final quantities = ref.watch(cartProvider);
-  return quantities.entries
-      .where((entry) => entry.value > 0)
-      .map(
-        (entry) => CartItem(
-          product: MockCatalog.byId(entry.key),
-          quantity: entry.value,
-        ),
-      )
-      .toList(growable: false);
+  final catalog = ref
+      .watch(catalogProvider)
+      .maybeWhen(
+        data: (products) => products,
+        orElse: () => MockCatalog.products,
+      );
+  final productsById = {for (final product in catalog) product.id: product};
+  final items = <CartItem>[];
+
+  for (final entry in quantities.entries) {
+    if (entry.value <= 0) continue;
+    final product = productsById[entry.key];
+    if (product == null) continue;
+    items.add(CartItem(product: product, quantity: entry.value));
+  }
+
+  return items;
 });
 
 final cartSummaryProvider = Provider<CartSummary>((ref) {
@@ -37,7 +46,7 @@ final cartSummaryProvider = Provider<CartSummary>((ref) {
 });
 
 class CartController extends StateNotifier<Map<String, int>> {
-  CartController() : super(MockCatalog.initialCartQuantities);
+  CartController() : super({});
 
   void setQuantity(String productId, int quantity) {
     if (quantity <= 0) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../features/cart/domain/cart_provider.dart';
-import '../../../../shared/data/mock_catalog.dart';
 import '../../../../shared/models/product_model.dart';
+import '../../../../shared/providers/catalog_provider.dart';
 import '../../../../shared/widgets/app_surface.dart';
 import '../../../../shared/widgets/image_placeholder.dart';
 import '../../../../shared/widgets/section_header.dart';
@@ -10,51 +10,61 @@ import 'quantity_stepper.dart';
 
 /// Operational alert row: products that are low or out of stock.
 /// Gives the store owner a fast way to restock before they run out.
-class LowStockSection extends StatelessWidget {
+class LowStockSection extends ConsumerWidget {
   const LowStockSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    final products = MockCatalog.lowStockProducts;
+    final productsAsync = ref.watch(catalogProvider);
 
-    if (products.isEmpty) return const SizedBox.shrink();
+    return productsAsync.when(
+      loading: () => const SizedBox.shrink(),
+      error: (error, stackTrace) => const SizedBox.shrink(),
+      data: (allProducts) {
+        final products = allProducts
+            .where((p) => p.isLowStock || p.isOutOfStock)
+            .toList(growable: false);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionHeader(
-          title: 'Kailangan ng restock',
-          trailing: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: cs.errorContainer,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Text(
-              '${products.length} item',
-              style: tt.labelSmall?.copyWith(
-                color: cs.onErrorContainer,
-                fontWeight: FontWeight.w700,
+        if (products.isEmpty) return const SizedBox.shrink();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionHeader(
+              title: 'Kailangan ng restock',
+              trailing: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: cs.errorContainer,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '${products.length} item',
+                  style: tt.labelSmall?.copyWith(
+                    color: cs.onErrorContainer,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (final product in products) ...[
-                _LowStockCard(product: product),
-                if (product != products.last) const SizedBox(width: 10),
-              ],
-            ],
-          ),
-        ),
-      ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final product in products) ...[
+                    _LowStockCard(product: product),
+                    if (product != products.last) const SizedBox(width: 10),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
