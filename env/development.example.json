@@ -4,6 +4,7 @@
   "API_LOGIN_PATH": "/api/v1/modules/grocery-connect/login",
   "API_PRODUCTS_PATH": "/api/v1/modules/grocery-connect/products",
   "API_LOGGING_ENABLED": true,
+  "MAPBOX_TOKEN": "",
   "DEFAULT_TENANT_KEY": "abc",
   "DEFAULT_EMAIL": "bert@mail.com",
   "DEFAULT_PASSWORD": "password"

@@ -42,4 +42,9 @@ class AppConfig {
     'API_LOGGING_ENABLED',
     defaultValue: true,
   );
+
+  static const String mapboxToken = String.fromEnvironment(
+    'MAPBOX_TOKEN',
+    defaultValue: '',
+  );
 }

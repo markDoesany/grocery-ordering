@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/config/app_config.dart';
 import '../domain/fulfillment_provider.dart';
 
-// Set your Mapbox public token here or via --dart-define=MAPBOX_TOKEN=...
-const _kToken = String.fromEnvironment('MAPBOX_TOKEN', defaultValue: '');
+// Set your Mapbox public token via --dart-define=MAPBOX_TOKEN=...
+const _kToken = AppConfig.mapboxToken;
+const _kHasMapboxToken = _kToken != '';
 
 const _kDefaultCenter = LatLng(14.5995, 120.9842); // Metro Manila
 
@@ -64,6 +66,8 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
   }
 
   Future<void> _reverseGeocode(LatLng latlng) async {
+    if (!_kHasMapboxToken) return;
+
     setState(() => _loadingAddress = true);
     try {
       final uri =
@@ -113,20 +117,19 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
             ),
             children: [
               TileLayer(
-                urlTemplate:
-                    'https://api.mapbox.com/styles/v1/mapbox/streets-v12'
-                    '/tiles/{z}/{x}/{y}@2x?access_token=$_kToken',
-                tileSize: 512,
-                zoomOffset: -1,
+                urlTemplate: _kHasMapboxToken
+                    ? 'https://api.mapbox.com/styles/v1/mapbox/streets-v12'
+                          '/tiles/{z}/{x}/{y}@2x?access_token=$_kToken'
+                    : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                tileSize: _kHasMapboxToken ? 512 : 256,
+                zoomOffset: _kHasMapboxToken ? -1 : 0,
                 userAgentPackageName: 'com.qappslock.grocery',
               ),
             ],
           ),
 
           // ── Crosshair pin (stays fixed at center) ────────────────────────
-          const Center(
-            child: _CrosshairPin(),
-          ),
+          const Center(child: _CrosshairPin()),
 
           // ── Top bar ──────────────────────────────────────────────────────
           Positioned(
@@ -236,7 +239,9 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
                                   children: [
                                     Text(
                                       _addressLabel ??
-                                          'I-galaw ang mapa para i-pin ang lugar',
+                                          (_kHasMapboxToken
+                                              ? 'I-galaw ang mapa para i-pin ang lugar'
+                                              : 'I-galaw ang mapa para i-pin ang lugar (address lookup unavailable)'),
                                       style: tt.bodyMedium?.copyWith(
                                         color: cs.onSurface,
                                         fontWeight: FontWeight.w600,
