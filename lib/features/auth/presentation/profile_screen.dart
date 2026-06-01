@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../features/auth/domain/auth_provider.dart';
 import '../../../features/branding/domain/branding_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -93,14 +94,16 @@ class ProfileScreen extends ConsumerWidget {
               const SizedBox(height: 40),
               // Logout
               OutlinedButton.icon(
-                onPressed: () => _confirmLogout(context),
+                onPressed: () => _confirmLogout(context, ref),
                 icon: const Icon(Icons.logout),
                 label: const Text('Log Out'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: cs.error,
                   side: BorderSide(color: cs.error),
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  textStyle: tt.labelLarge?.copyWith(fontWeight: FontWeight.w700),
+                  textStyle: tt.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],
@@ -110,7 +113,7 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-  void _confirmLogout(BuildContext context) {
+  void _confirmLogout(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     showDialog<bool>(
       context: context,
@@ -131,6 +134,7 @@ class ProfileScreen extends ConsumerWidget {
       ),
     ).then((confirmed) {
       if (confirmed == true && context.mounted) {
+        ref.read(authControllerProvider.notifier).logout();
         context.go(AppConstants.loginRoute);
       }
     });
