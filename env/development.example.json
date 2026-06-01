@@ -1,0 +1,9 @@
+{
+  "TENANT_ID": "tenant_abc",
+  "API_BASE_URL": "https://one-solution-main-mo8dn4.laravel.cloud",
+  "API_LOGIN_PATH": "/api/v1/modules/grocery-connect/login",
+  "API_PRODUCTS_PATH": "/api/v1/modules/grocery-connect/products",
+  "DEFAULT_TENANT_KEY": "abc",
+  "DEFAULT_EMAIL": "bert@mail.com",
+  "DEFAULT_PASSWORD": "password"
+}

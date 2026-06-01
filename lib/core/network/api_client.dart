@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../config/app_config.dart';
 import '../constants/app_constants.dart';
 
-/// Configured Dio instance. Prepared for future endpoints:
-///   GET /branding
-///   GET /products
+/// Shared Dio client for backend modules.
 final apiClientProvider = Provider<Dio>((ref) {
   return Dio(
     BaseOptions(
-      baseUrl: 'https://api.example.com/v1',
+      baseUrl: AppConfig.apiBaseUrl,
       connectTimeout: AppConstants.networkTimeout,
       receiveTimeout: AppConstants.networkTimeout,
       headers: {

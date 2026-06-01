@@ -100,3 +100,7 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 *.mocks.dart
+
+# Local environment config
+/env/*.json
+!/env/*.example.json
